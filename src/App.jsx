@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./App.css";
+import Forecast from "./Forecast/Forecast";
+
 
 function App() {
   const [forecast, setForecast] = useState([]);
@@ -9,13 +11,15 @@ function App() {
         "http://api.weatherapi.com/v1/forecast.json?key=b1c4a77558e040c0ad644008242401&q=96756&days=3&aqi=no&alerts=no"
       );
       const data = await response.json();
+      const forecastDays = data.forecast.forecastday;
       console.log(data);
-      const dailyForecast = data.forecast.forecastday.map((dog) => ({
-        date: dog.date,
-        text: dog.day.condition.text,
-        icon: dog.day.condition.icon,
+      const dailyForecasts = forecastDays.map((forecastDay) => ({
+        id: forecastDay.date_epoch,
+        date: forecastDay.date,
+        text: forecastDay.day.condition.text,
+        icon: forecastDay.day.condition.icon,
       }));
-      setForecast(dailyForecast);
+      setForecast(dailyForecasts);
     };
     downloadWeather();
   }, []);
@@ -23,13 +27,7 @@ function App() {
     <>
       <div className="forecast-box">
         {forecast.map((forecast, index) => (
-          <div key={index} className="forecast-item">
-            <div className="forecast-item-contents">
-              <h1>{forecast.date}</h1>
-              <h2>{forecast.text}</h2>
-              <img src={forecast.icon} alt={forecast.text} />
-            </div>
-          </div>
+          <Forecast key={forecast.id} forecast={forecast} />
         ))}
       </div>
     </>

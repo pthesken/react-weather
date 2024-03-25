@@ -5,15 +5,4 @@
   box-shadow: 10px 10px 20px 5px rgba(0, 0, 0, 0.5);
 }
 
-.forecast-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
-  box-shadow: 10px 10px 20px 5px rgba(0, 0, 0, 0.5);
-}
-
-.forecast-item-contents {
-  margin: 20px;
-}
